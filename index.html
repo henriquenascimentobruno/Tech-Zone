@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tech Zone - Guia Completo de Programação</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Consolas', monospace;
+    }
+    body {
+      background:#0f111a; color:#a2fca2; min-height:100vh;
+      padding:40px 20px 80px;
+    }
+    header {
+      text-align:center; margin-bottom:30px;
+    }
+    header h1 {
+      font-size:3rem; color:#3af74d;
+      text-shadow:0 0 15px #3af74d; letter-spacing:2px;
+    }
+    .tabs {
+      max-width:900px; margin:0 auto;
+      background:#141823; border-radius:12px;
+      box-shadow:0 0 15px #3af74d88; overflow:hidden;
+    }
+    .tab-buttons {
+      display:flex; background:#202835; border-bottom:2px solid #3af74d;
+    }
+    .tab-buttons button {
+      flex:1; padding:15px; background:none; border:none;
+      color:#7ef27e; cursor:pointer; font-weight:700; font-size:1.1rem;
+      transition:0.3s; border-bottom:3px solid transparent;
+    }
+    .tab-buttons button:hover {
+      background:#3af74d22; color:#3af74d;
+    }
+    .tab-buttons button.active {
+      background:#3af74d; color:#0f111a; border-bottom:3px solid #27d92d;
+      font-weight:900;
+    }
+    .tab-content {
+      padding:25px 30px; background:#101622; color:#b4f7b4;
+      min-height:360px; line-height:1.6; font-size:1rem;
+    }
+    .programming-submenu {
+      margin-top:20px; display:flex; gap:15px; flex-wrap:wrap;
+    }
+    .programming-submenu button {
+      padding:10px 18px; background:#1e2b3c;
+      border:2px solid #3af74d; color:#3af74d;
+      cursor:pointer; border-radius:8px; font-weight:600;
+      transition:0.3s;
+    }
+    .programming-submenu button.active,
+    .programming-submenu button:hover {
+      background:#3af74d; color:#0f111a; font-weight:700;
+    }
+    .programming-detail {
+      margin-top:20px; background:#182230; border-radius:10px;
+      padding:20px; box-shadow:0 0 10px #3af74d88;
+      min-height:360px; max-height:600px;
+      overflow-y:auto; overflow-x:hidden;
+      padding-right:15px;
+    }
+    .learn-tabs {
+      margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .learn-tabs button {
+      padding:8px 14px; background:#1e2b3c;
+      border:2px solid #3af74d; color:#3af74d;
+      cursor:pointer; border-radius:8px; font-weight:600;
+      font-size:0.95rem; transition:0.3s;
+    }
+    .learn-tabs button.active,
+    .learn-tabs button:hover {
+      background:#3af74d; color:#0f111a; font-weight:700;
+    }
+    #learn-content {
+      margin-top:20px; font-size:0.9rem; line-height:1.5;
+      white-space: pre-wrap; /* para preservar quebras */
+    }
+    pre {
+      background:#0b121b; padding:12px 16px; border-radius:8px;
+      overflow-x:auto; margin:12px 0; font-size:0.9rem;
+      box-shadow: inset 0 0 8px #2ade6faa;
+    }
+    h3, h4 {
+      color:#7fff7f; margin-bottom:8px;
+    }
+    a {
+      color:#3af74d; text-decoration:none; font-weight:600;
+    }
+    a:hover {
+      text-decoration:underline;
+    }
+    footer {
+      text-align:center; margin-top:40px;
+      padding:20px; color:#6aaf6a;
+      font-size:0.9rem; font-style:italic;
+    }
+    @media (max-width:600px) {
+      .tab-buttons button { font-size:1rem; padding:12px; }
+      .programming-submenu, .learn-tabs {
+        flex-direction: column;
+      }
+      .programming-submenu button, .learn-tabs button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Tech Zone</h1>
+  <p style="color:#4df94d; font-weight:600;">Seu Guia Completo de Programação Organizado</p>
+</header>
+
+<div class="tabs">
+  <div class="tab-buttons">
+    <button class="tab-btn" data-tab="home">Home</button>
+    <button class="tab-btn active" data-tab="programacao">Programação</button>
+    <button class="tab-btn" data-tab="sobre">Sobre</button>
+    <button class="tab-btn" data-tab="contato">Contato</button>
+  </div>
+
+  <div class="tab-content" id="home" style="display:none;">
+    <h2>Bem-vindo ao Tech Zone!</h2>
+    <p>Este site é seu espaço para aprender sobre programação e tecnologia, com dicas, guias e conteúdos organizados para 2025.</p>
+    <p>Clique na aba "Programação" para explorar os tipos de programação mais populares e seus detalhes.</p>
+  </div>
+
+  <div class="tab-content" id="programacao">
+    <h2>Como Aprender Programação</h2>
+    <div class="programming-submenu">
+      <button class="prog-btn active" data-prog="aprenda">Como Aprender</button>
+    </div>
+
+    <div class="programming-detail" id="prog-content">
+      <div class="learn-tabs">
+        <button class="learn-btn active" data-lang="lua">Lua</button>
+        <button class="learn-btn" data-lang="html">HTML</button>
+        <button class="learn-btn" data-lang="python">Python</button>
+        <button class="learn-btn" data-lang="css">CSS</button>
+        <button class="learn-btn" data-lang="java">Java</button>
+      </div>
+      <div id="learn-content">
+        <!-- Conteúdo Lua por padrão -->
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="sobre" style="display:none;">
+    <h2>Sobre o Tech Zone</h2>
+    <p>O Tech Zone é um projeto criado para ajudar iniciantes e profissionais a se atualizarem no mundo da programação, com conteúdos organizados e fáceis de entender.</p>
+    <p>Aqui você encontra dicas, tutoriais, notícias e muito mais, tudo pensado para deixar seu aprendizado mais eficiente e divertido.</p>
+  </div>
+
+  <div class="tab-content" id="contato" style="display:none;">
+    <h2>Contato</h2>
+    <p>Quer falar com a gente? Manda um e-mail para <a href="mailto:contato@techzone.com">contato@techzone.com</a> ou siga-nos nas redes sociais:</p>
+    <ul>
+      <li><a href="#" target="_blank">Twitter</a></li>
+      <li><a href="#" target="_blank">Instagram</a></li>
+      <li><a href="#" target="_blank">LinkedIn</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Tech Zone - Seu guia tech
+</footer>
+
+<script>
+  // Abas principais (Home, Programação, Sobre, Contato)
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.getAttribute('data-tab');
+      tabContents.forEach(c => c.style.display = (c.id === tab ? 'block' : 'none'));
+    });
+  });
+
+  // Como Aprender abas de linguagem
+  const learnButtons = document.querySelectorAll('.learn-btn');
+  const learnContent = document.getElementById('learn-content');
+
+  const learnData = {
+    lua: `
+<h4>Lua - Guia Completo</h4>
+<p><strong>Para que serve:</strong> Muito usada em jogos (ex: Roblox), scripts leves, automação e prototipagem rápida.</p>
+<p><strong>Onde usar:</strong> Jogos, sistemas embarcados, scripts.</p>
+
+<p><strong>1. Olá Mundo</strong></p>
+<pre><code>print("Olá, mundo!")</code></pre>
+
+<p><strong>2. Variáveis</strong></p>
+<pre><code>local idade = 10
+local nome = "Bernardo"</code></pre>
+
+<p><strong>3. Tipos de dados</strong></p>
+<pre><code>local numero = 5
+local texto = "Lua"
+local booleano = true</code></pre>
+
+<p><strong>4. Função simples</strong></p>
+<pre><code>function soma(a, b)
+  return a + b
+end
+print(soma(4, 3)) -- 7</code></pre>
+
+<p><strong>5. Condicionais</strong></p>
+<pre><code>local idade = 18
+if idade >= 18 then
+  print("Maior de idade")
+else
+  print("Menor de idade")
+end</code></pre>
+
+<p><strong>6. Laço for</strong></p>
+<pre><code>for i = 1, 5 do
+  print("Número: "..i)
+end</code></pre>
+
+<p><strong>7. Laço while</strong></p>
+<pre><code>local i = 1
+while i <= 5 do
+  print(i)
+  i = i + 1
+end</code></pre>
+
+<p><strong>8. Tabelas (arrays/dicionários)</strong></p>
+<pre><code>local frutas = {"maçã", "banana", "laranja"}
+print(frutas[1]) -- maçã</code></pre>
+
+<p><strong>9. Tabela com chaves</strong></p>
+<pre><code>local pessoa = {nome="Bernardo", idade=10}
+print(pessoa.nome)</code></pre>
+
+<p><strong>10. Função anônima</strong></p>
+<pre><code>local f = function(x) return x * 2 end
+print(f(5)) -- 10</code></pre>
+
+<p><strong>11. Métodos em tabelas</strong></p>
+<pre><code>local pessoa = {
+  nome = "Ana",
+  idade = 20,
+  dizerOi = function(self)
+    print("Oi, eu sou "..self.nome)
+  end
+}
+pessoa:dizerOi()</code></pre>
+
+<p><strong>12. Concatenar strings</strong></p>
+<pre><code>local a = "Olá"
+local b = "mundo"
+print(a .. " " .. b) -- Olá mundo</code></pre>
+
+<p><strong>13. Operadores básicos</strong></p>
+<pre><code>local soma = 5 + 3
+local mult = 4 * 2
+print(soma, mult)</code></pre>
+
+<p><strong>14. Números com ponto flutuante</strong></p>
+<pre><code>local x = 3.14
+print(x)</code></pre>
+
+<p><strong>15. Comentários</strong></p>
+<pre><code>-- Comentário de uma linha
+--[[
+Comentário
+de várias linhas
+]]</code></pre>
+
+<p><strong>16. Retornar múltiplos valores</strong></p>
+<pre><code>function div_mod(a, b)
+  return math.floor(a/b), a % b
+end
+local q, r = div_mod(10, 3)
+print(q, r) -- 3 1</code></pre>
+
+<p><strong>17. Table.insert e #</strong></p>
+<pre><code>local t = {}
+table.insert(t, "valor")
+print(#t) -- 1</code></pre>
+
+<p><strong>18. Função recursiva</strong></p>
+<pre><code>function fatorial(n)
+  if n == 0 then
+    return 1
+  else
+    return n * fatorial(n-1)
+  end
+end
+print(fatorial(5)) -- 120</code></pre>
+
+<p><strong>19. Módulos simples</strong></p>
+<pre><code>local M = {}
+function M.saudacao()
+  print("Oi!")
+end
+return M</code></pre>
+
+<p><strong>20. Pausar execução</strong></p>
+<pre><code>os.execute("sleep 1") -- pausa 1 segundo (em sistemas Unix)</code></pre>
+
+<p><strong>21. Metatables básicos</strong></p>
+<pre><code>local t = {}
+setmetatable(t, {
+  __index = function(table, key)
+    return "Chave "..key.." não existe"
+  end
+})
+print(t.foo)</code></pre>
+
+<p><strong>22. Corrotinas</strong></p>
+<pre><code>co = coroutine.create(function ()
+  for i=1,3 do
+    print(i)
+    coroutine.yield()
+  end
+end)
+coroutine.resume(co)
+coroutine.resume(co)</code></pre>
+
+<p><strong>23. Manipulando strings</strong></p>
+<pre><code>local s = "Lua é massa"
+print(string.upper(s)) -- LUA É MASSA</code></pre>
+
+<p><strong>24. Tabela como pilha</strong></p>
+<pre><code>local pilha = {}
+table.insert(pilha, 1)
+table.insert(pilha, 2)
+print(table.remove(pilha)) -- 2</code></pre>
+
+<p><strong>25. Loop com ipairs</strong></p>
+<pre><code>local t = {10,20,30}
+for i,v in ipairs(t) do
+  print(i,v)
+end</code></pre>
+    `,
+    html: `
+<h4>HTML - Guia Completo</h4>
+<p><strong>Para que serve:</strong> Estrutura básica da web para criar páginas, textos, imagens, links e muito mais.</p>
+<p><strong>Onde usar:</strong> Sites, blogs, apps web, emails.</p>
+
+<p><strong>1. Estrutura básica</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Minha Página&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Olá, Mundo!&lt;/h1&gt;
+    &lt;p&gt;Meu primeiro site&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<p><strong>2. Cabeçalhos</strong></p>
+<pre><code>&lt;h1&gt;Título 1&lt;/h1&gt;
+&lt;h2&gt;Título 2&lt;/h2&gt;
+&lt;h3&gt;Título 3&lt;/h3&gt;</code></pre>
+
+<p><strong>3. Parágrafos e texto</strong></p>
+<pre><code>&lt;p&gt;Este é um parágrafo.&lt;/p&gt;
+&lt;strong&gt;Texto em negrito&lt;/strong&gt;
+&lt;em&gt;Texto em itálico&lt;/em&gt;</code></pre>
+
+<p><strong>4. Links</strong></p>
+<pre><code>&lt;a href="https://google.com"&gt;Google&lt;/a&gt;</code></pre>
+
+<p><strong>5. Imagens</strong></p>
+<pre><code>&lt;img src="https://via.placeholder.com/150" alt="Exemplo de imagem"&gt;</code></pre>
+
+<p><strong>6. Listas ordenadas</strong></p>
+<pre><code>&lt;ol&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+<p><strong>7. Listas não ordenadas</strong></p>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;Item A&lt;/li&gt;
+  &lt;li&gt;Item B&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+<p><strong>8. Tabelas</strong></p>
+<pre><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Nome&lt;/th&gt;
+    &lt;th&gt;Idade&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ana&lt;/td&gt;
+    &lt;td&gt;25&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+<p><strong>9. Formulários</strong></p>
+<pre><code>&lt;form&gt;
+  &lt;label&gt;Nome:&lt;/label&gt;
+  &lt;input type="text" name="nome"&gt;
+&lt;/form&gt;</code></pre>
+
+<p><strong>10. Botões</strong></p>
+<pre><code>&lt;button&gt;Clique aqui&lt;/button&gt;</code></pre>
+
+<p><strong>11. Divs e spans</strong></p>
+<pre><code>&lt;div&gt;Bloco de conteúdo&lt;/div&gt;
+&lt;span&gt;Texto em linha&lt;/span&gt;</code></pre>
+
+<p><strong>12. Comentários</strong></p>
+<pre><code>&lt;!-- Comentário em HTML --&gt;</code></pre>
+
+<p><strong>13. Atributos</strong></p>
+<pre><code>&lt;img src="imagem.jpg" alt="Texto alternativo" width="200"&gt;</code></pre>
+
+<p><strong>14. Vídeo embutido</strong></p>
+<pre><code>&lt;video width="320" height="240" controls&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  Seu navegador não suporta vídeo.
+&lt;/video&gt;</code></pre>
+
+<p><strong>15. Áudio embutido</strong></p>
+<pre><code>&lt;audio controls&gt;
+  &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+  Seu navegador não suporta áudio.
+&lt;/audio&gt;</code></pre>
+
+<p><strong>16. Iframes</strong></p>
+<pre><code>&lt;iframe src="https://example.com" width="300" height="200"&gt;&lt;/iframe&gt;</code></pre>
+
+<p><strong>17. Metadados</strong></p>
+<pre><code>&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></pre>
+
+<p><strong>18. Cabeçalho fixo</strong></p>
+<pre><code>&lt;header&gt;
+  &lt;h1&gt;Meu Site&lt;/h1&gt;
+&lt;/header&gt;</code></pre>
+
+<p><strong>19. Footer</strong></p>
+<pre><code>&lt;footer&gt;Rodapé do site&lt;/footer&gt;</code></pre>
+
+<p><strong>20. Input checkbox</strong></p>
+<pre><code>&lt;input type="checkbox" name="aceito"&gt; Aceito termos</code></pre>
+
+<p><strong>21. Select (dropdown)</strong></p>
+<pre><code>&lt;select name="opcao"&gt;
+  &lt;option value="1"&gt;Opção 1&lt;/option&gt;
+  &lt;option value="2"&gt;Opção 2&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+<p><strong>22. Span com estilo inline</strong></p>
+<pre><code>&lt;span style="color:red;"&gt;Texto vermelho&lt;/span&gt;</code></pre>
+
+<p><strong>23. Div com classe</strong></p>
+<pre><code>&lt;div class="container"&gt;Conteúdo aqui&lt;/div&gt;</code></pre>
+
+<p><strong>24. Link para CSS externo</strong></p>
+<pre><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></pre>
+
+<p><strong>25. Script JS embutido</strong></p>
+<pre><code>&lt;script&gt;
+  alert('Olá!');
+&lt;/script&gt;</code></pre>
+    `,
+    python: `
+<h4>Python - Guia Completo</h4>
+<p><strong>Para que serve:</strong> Versátil, para automação, web, ciência de dados, IA, scripts.</p>
+<p><strong>Onde usar:</strong> Aplicativos, scripts, servidores, análise de dados.</p>
+
+<p><strong>1. Olá Mundo</strong></p>
+<pre><code>print("Olá, Mundo!")</code></pre>
+
+<p><strong>2. Variáveis</strong></p>
+<pre><code>nome = "Bernardo"
+idade = 10</code></pre>
+
+<p><strong>3. Tipos básicos</strong></p>
+<pre><code>inteiro = 5
+texto = "texto"
+booleano = True
+float_num = 3.14</code></pre>
+
+<p><strong>4. Condicionais</strong></p>
+<pre><code>if idade &gt;= 18:
+    print("Maior de idade")
+else:
+    print("Menor de idade")</code></pre>
+
+<p><strong>5. Laço for</strong></p>
+<pre><code>for i in range(5):
+    print(i)</code></pre>
+
+<p><strong>6. Laço while</strong></p>
+<pre><code>i = 0
+while i &lt; 5:
+    print(i)
+    i += 1</code></pre>
+
+<p><strong>7. Função simples</strong></p>
+<pre><code>def soma(a, b):
+    return a + b
+print(soma(3, 4))</code></pre>
+
+<p><strong>8. Listas</strong></p>
+<pre><code>lista = [1, 2, 3, 4]
+print(lista[0])</code></pre>
+
+<p><strong>9. Dicionários</strong></p>
+<pre><code>pessoa = {"nome": "Ana", "idade": 25}
+print(pessoa["nome"])</code></pre>
+
+<p><strong>10. Tuplas</strong></p>
+<pre><code>tupla = (1, 2, 3)</code></pre>
+
+<p><strong>11. Importar módulos</strong></p>
+<pre><code>import math
+print(math.sqrt(9))</code></pre>
+
+<p><strong>12. Comentários</strong></p>
+<pre><code># Comentário
+""" Comentário
+de várias linhas
+"""</code></pre>
+
+<p><strong>13. Funções com valores padrão</strong></p>
+<pre><code>def ola(nome="amigo"):
+    print("Olá, " + nome)
+ola()</code></pre>
+
+<p><strong>14. Classes básicas</strong></p>
+<pre><code>class Pessoa:
+    def __init__(self, nome):
+        self.nome = nome
+
+p = Pessoa("Bernardo")
+print(p.nome)</code></pre>
+
+<p><strong>15. Exceções</strong></p>
+<pre><code>try:
+    x = 1/0
+except ZeroDivisionError:
+    print("Divisão por zero")</code></pre>
+
+<p><strong>16. Compreensão de listas</strong></p>
+<pre><code>quadrados = [x**2 for x in range(5)]
+print(quadrados)</code></pre>
+
+<p><strong>17. Funções lambda</strong></p>
+<pre><code>f = lambda x: x * 2
+print(f(5))</code></pre>
+
+<p><strong>18. Leitura de arquivo</strong></p>
+<pre><code>with open("arquivo.txt") as f:
+    texto = f.read()
+print(texto)</code></pre>
+
+<p><strong>19. Escrita em arquivo</strong></p>
+<pre><code>with open("saida.txt", "w") as f:
+    f.write("Olá!")</code></pre>
+
+<p><strong>20. Listas multidimensionais</strong></p>
+<pre><code>matriz = [[1,2], [3,4]]
+print(matriz[0][1])</code></pre>
+
+<p><strong>21. Decoradores simples</strong></p>
+<pre><code>def decorador(func):
+    def wrapper():
+        print("Antes")
+        func()
+        print("Depois")
+    return wrapper
+
+@decorador
+def diz_oi():
+    print("Oi")
+
+diz_oi()</code></pre>
+
+<p><strong>22. Geradores</strong></p>
+<pre><code>def contador():
+    i = 0
+    while True:
+        yield i
+        i += 1
+
+gen = contador()
+print(next(gen))
+print(next(gen))</code></pre>
+
+<p><strong>23. Map e filter</strong></p>
+<pre><code>nums = [1,2,3,4]
+print(list(map(lambda x: x*2, nums)))
+print(list(filter(lambda x: x&gt;2, nums)))</code></pre>
+
+<p><strong>24. Expressões regulares</strong></p>
+<pre><code>import re
+texto = "telefone: 123-456"
+print(re.findall(r"\\d+", texto))</code></pre>
+
+<p><strong>25. Manipulação de datas</strong></p>
+<pre><code>import datetime
+hoje = datetime.date.today()
+print(hoje)</code></pre>
+    `,
+    css: `
+<h4>CSS - Guia Completo</h4>
+<p><strong>Para que serve:</strong> Estilizar sites e apps, definindo cores, fontes, layouts, responsividade e animações.</p>
+<p><strong>Onde usar:</strong> Websites, apps web, interfaces visuais.</p>
+
+<p><strong>1. Seletores básicos</strong></p>
+<pre><code>body {
+  background-color: #222;
+  color: #eee;
+  font-family: Arial, sans-serif;
+}</code></pre>
+
+<p><strong>2. Cor de texto</strong></p>
+<pre><code>p {
+  color: blue;
+}</code></pre>
+
+<p><strong>3. Background</strong></p>
+<pre><code>div {
+  background-color: #333;
+}</code></pre>
+
+<p><strong>4. Margem e padding</strong></p>
+<pre><code>h1 {
+  margin: 20px;
+  padding: 10px;
+}</code></pre>
+
+<p><strong>5. Bordas</strong></p>
+<pre><code>img {
+  border: 2px solid black;
+}</code></pre>
+
+<p><strong>6. Classes e IDs</strong></p>
+<pre><code>.botao {
+  background-color: green;
+  color: white;
+}</code></pre>
+
+<p><strong>7. Display flex</strong></p>
+<pre><code>.container {
+  display: flex;
+  justify-content: center;
+}</code></pre>
+
+<p><strong>8. Position relative e absolute</strong></p>
+<pre><code>.box {
+  position: relative;
+}
+
+.box-abs {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}</code></pre>
+
+<p><strong>9. Text-align</strong></p>
+<pre><code>h2 {
+  text-align: center;
+}</code></pre>
+
+<p><strong>10. Fontes</strong></p>
+<pre><code>p {
+  font-family: 'Courier New', monospace;
+}</code></pre>
+
+<p><strong>11. Altura e largura</strong></p>
+<pre><code>div {
+  width: 100px;
+  height: 50px;
+}</code></pre>
+
+<p><strong>12. Float</strong></p>
+<pre><code>img {
+  float: right;
+}</code></pre>
+
+<p><strong>13. Z-index</strong></p>
+<pre><code>.modal {
+  z-index: 1000;
+}</code></pre>
+
+<p><strong>14. Box-shadow</strong></p>
+<pre><code>div {
+  box-shadow: 2px 2px 5px #000;
+}</code></pre>
+
+<p><strong>15. Text-shadow</strong></p>
+<pre><code>h1 {
+  text-shadow: 2px 2px 5px #555;
+}</code></pre>
+
+<p><strong>16. Transições</strong></p>
+<pre><code>.botao {
+  transition: background-color 0.3s ease;
+}</code></pre>
+
+<p><strong>17. Animações simples</strong></p>
+<pre><code>@keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.piscar {
+  animation: piscar 1s infinite;
+}</code></pre>
+
+<p><strong>18. Pseudo-classes</strong></p>
+<pre><code>a:hover {
+  color: red;
+}</code></pre>
+
+<p><strong>19. Overflow</strong></p>
+<pre><code>div {
+  overflow: hidden;
+}</code></pre>
+
+<p><strong>20. Media queries</strong></p>
+<pre><code>@media (max-width: 600px) {
+  body {
+    background: lightgray;
+  }
+}</code></pre>
+
+<p><strong>21. Grid layout</strong></p>
+<pre><code>.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}</code></pre>
+
+<p><strong>22. Cursor</strong></p>
+<pre><code>button {
+  cursor: pointer;
+}</code></pre>
+
+<p><strong>23. Opacidade</strong></p>
+<pre><code>.transparente {
+  opacity: 0.5;
+}</code></pre>
+
+<p><strong>24. List-style</strong></p>
+<pre><code>ul {
+  list-style-type: square;
+}</code></pre>
+
+<p><strong>25. Variáveis CSS</strong></p>
+<pre><code>:root {
+  --cor-principal: #3af74d;
+}
+
+.botao {
+  background-color: var(--cor-principal);
+}</code></pre>
+    `,
+    java: `
+<h4>Java - Guia Completo</h4>
+<p><strong>Para que serve:</strong> Muito usada em apps grandes, servidores, Android, e sistemas corporativos.</p>
+<p><strong>Onde usar:</strong> Apps Android, servidores, jogos (Minecraft), sistemas empresariais.</p>
+
+<p><strong>1. Olá Mundo</strong></p>
+<pre><code>public class OlaMundo {
+  public static void main(String[] args) {
+    System.out.println("Olá, Mundo!");
+  }
+}</code></pre>
+
+<p><strong>2. Variáveis</strong></p>
+<pre><code>int idade = 10;
+String nome = "Bernardo";</code></pre>
+
+<p><strong>3. Tipos básicos</strong></p>
+<pre><code>int numero = 5;
+double pi = 3.14;
+boolean ativo = true;</code></pre>
+
+<p><strong>4. Condicionais</strong></p>
+<pre><code>if (idade &gt;= 18) {
+  System.out.println("Maior de idade");
+} else {
+  System.out.println("Menor de idade");
+}</code></pre>
+
+<p><strong>5. Laços for</strong></p>
+<pre><code>for (int i = 0; i &lt; 5; i++) {
+  System.out.println(i);
+}</code></pre>
+
+<p><strong>6. Laço while</strong></p>
+<pre><code>int i = 0;
+while (i &lt; 5) {
+  System.out.println(i);
+  i++;
+}</code></pre>
+
+<p><strong>7. Função (método) simples</strong></p>
+<pre><code>public static int soma(int a, int b) {
+  return a + b;
+}</code></pre>
+
+<p><strong>8. Classes</strong></p>
+<pre><code>public class Pessoa {
+  String nome;
+  int idade;
+  public Pessoa(String nome, int idade) {
+    this.nome = nome;
+    this.idade = idade;
+  }
+}</code></pre>
+
+<p><strong>9. Objetos</strong></p>
+<pre><code>Pessoa p = new Pessoa("Ana", 25);
+System.out.println(p.nome);</code></pre>
+
+<p><strong>10. Métodos getters e setters</strong></p>
+<pre><code>public String getNome() {
+  return nome;
+}
+
+public void setNome(String nome) {
+  this.nome = nome;
+}</code></pre>
+
+<p><strong>11. Arrays</strong></p>
+<pre><code>int[] numeros = {1,2,3,4};</code></pre>
+
+<p><strong>12. ArrayList</strong></p>
+<pre><code>import java.util.ArrayList;
+ArrayList<String> lista = new ArrayList<>();
+lista.add("Teste");</code></pre>
+
+<p><strong>13. Interfaces</strong></p>
+<pre><code>interface Animal {
+  void emitirSom();
+}</code></pre>
+
+<p><strong>14. Herança</strong></p>
+<pre><code>public class Cachorro extends Animal {
+  public void emitirSom() {
+    System.out.println("Au au");
+  }
+}</code></pre>
+
+<p><strong>15. Polimorfismo</strong></p>
+<pre><code>Animal a = new Cachorro();
+a.emitirSom();</code></pre>
+
+<p><strong>16. Construtores</strong></p>
+<pre><code>public class Pessoa {
+  String nome;
+  public Pessoa(String nome) {
+    this.nome = nome;
+  }
+}</code></pre>
+
+<p><strong>17. Exceções try-catch</strong></p>
+<pre><code>try {
+  int x = 1 / 0;
+} catch (ArithmeticException e) {
+  System.out.println("Erro: divisão por zero");
+}</code></pre>
+
+<p><strong>18. Enums</strong></p>
+<pre><code>enum Dias {SEGUNDA, TERÇA, QUARTA}</code></pre>
+
+<p><strong>19. Switch</strong></p>
+<pre><code>switch(dia) {
+  case "SEGUNDA":
+    System.out.println("Início da semana");
+    break;
+  default:
+    System.out.println("Outro dia");
+}</code></pre>
+
+<p><strong>20. String concatenation</strong></p>
+<pre><code>String nome = "Bernardo";
+String msg = "Olá, " + nome;</code></pre>
+
+<p><strong>21. Métodos estáticos</strong></p>
+<pre><code>public static void imprimir() {
+  System.out.println("Imprimindo...");
+}</code></pre>
+
+<p><strong>22. Laço foreach</strong></p>
+<pre><code>for (String s : lista) {
+  System.out.println(s);
+}</code></pre>
+
+<p><strong>23. String equals</strong></p>
+<pre><code>if(nome.equals("Bernardo")) {
+  System.out.println("É Bernardo");
+}</code></pre>
+
+<p><strong>24. Final keyword</strong></p>
+<pre><code>final int CONSTANTE = 10;</code></pre>
+
+<p><strong>25. Main method</strong></p>
+<pre><code>public static void main(String[] args) {
+  System.out.println("Começando o programa");
+}</code></pre>
+    `
+  };
+
+  function setContent(lang) {
+    learnContent.innerHTML = learnData[lang];
+  }
+
+  learnButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      learnButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setContent(btn.getAttribute('data-lang'));
+    });
+  });
+
+  // Inicializa com Lua
+  setContent('lua');
+</script>
+
+</body>
+</html>
